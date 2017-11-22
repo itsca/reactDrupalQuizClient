@@ -17,7 +17,7 @@ class App extends React.Component {
           <h1 className="App-title">Garrison Elementary</h1>
           <h1 className="App-subtitle">Quiz App</h1>
         </header>
-        {!this.state.quizSelected && <Search />}
+        <Search />
       </div>
     );
   }

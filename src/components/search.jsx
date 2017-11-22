@@ -1,6 +1,9 @@
 import React from 'react';
 import {Glyphicon, Button, FormGroup, FormControl, InputGroup} from 'react-bootstrap';
 
+let currentCorrectAnswer = "";
+let currentQuizLength = 0;
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -55,14 +58,36 @@ class Search extends React.Component {
     }
   }
 
-  checkForValidationError() {
-    if (this.state.validationError === true) {
-      return (
-        <div>
-          <p style={{color: 'red'}}>Search can't include # or spaces!</p>
-        </div>
-      );
-    }
+  renderQuestion() {
+    currentQuizLength = this.state.currQuiz.field_q.length
+    let currQuestionIndex = 0
+    let question = this.state.currQuiz.field_q[currQuestionIndex];
+    return(
+      <div>
+        {
+          <div>
+            <h3 className="current_question_title">
+             {(currQuestionIndex+1) + ")  " }
+             {question.field_t["0"].value + ' ?'}
+            </h3>
+            <form action="">
+              {question.field_question.map((answer, index2) => { 
+                if (answer.correct === "1") {
+                  currentCorrectAnswer = answer.answer
+                  //console.log(currentCorrectAnswer)
+                } 
+                return(
+                  <div key={index2}>
+                    <input type="radio" name="answer" value={answer.answer} />
+                      <p>{answer.answer}</p>
+                  </div>
+                )}
+              )}
+            </form>
+          </div>
+        }
+      </div>
+    )
   }
 
   render() {
@@ -110,12 +135,16 @@ class Search extends React.Component {
       );
     } else {
       return(
-        <p>
-          {this.state.currQuiz.title["0"].value}
-        </p>
+        <div className="quiz-wrapper">
+          <h2 className="quiz-page-title">
+            {this.state.currQuiz.title["0"].value}
+          </h2>
+          {
+            this.renderQuestion()
+          }
+        </div>
       );
     }
-    
   }
 }
 
