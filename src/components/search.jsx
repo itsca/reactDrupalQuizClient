@@ -38,8 +38,11 @@ class Search extends React.Component {
       .then(response => response.json())
       .then(json => {
         console.log(json);
-        this.setState({selectedQuiz: json});
-        this.setState({searchResult: {'name': json.message.title["0"].value}, searchError: false, loading: false, currQuiz: json.message});
+        if (json.message.type["0"].target_id === 'quiz') {
+          this.setState({searchResult: {'name': json.message.title["0"].value}, searchError: false, loading: false, currQuiz: json.message, selectedQuiz: json});
+        } else {
+          this.setState({searchError: true, loading: false});
+        }
       }).catch(function(error) {
         console.log(error);
         this.setState({searchError: true, loading: false});
@@ -67,8 +70,9 @@ class Search extends React.Component {
       return(
         <div>
           <h3 className="current_question_title">
-             Congrats
+             Congratulations!
           </h3>
+          <input type="button" value="Back to Home" className="next_question_buton" onClick={() => { this.setState({inQuiz: false,selectedQuiz: "", currQuestionIndex: 0, selectedAnswer: "", searchResult: {'name': ''}}) } } />
         </div>
       )
     }
@@ -108,10 +112,13 @@ class Search extends React.Component {
   handleNext() {
     if (this.state.selectedAnswer === currentCorrectAnswer) {
       this.setState({currQuestionIndex: this.state.currQuestionIndex+1})
+    } else {
+      this.setState({incorrectAnswer: true})
     }
   }
 
   handleAnswerChange(answer) {
+    this.setState({incorrectAnswer: false})
     this.setState({selectedAnswer: answer})
   }
 
@@ -120,6 +127,7 @@ class Search extends React.Component {
       return (
         <div className="container" style={{width: '60%', paddingTop: '2em'}}>
           <p><strong>Look for the quiz you would like to take by its Id ( node Id )</strong></p>
+          <p><strong>Protip!: There's only two quizzes number 11 and 10 feel free to add more.</strong></p>
           <FormGroup>
             <InputGroup>
               <FormControl type="text"
