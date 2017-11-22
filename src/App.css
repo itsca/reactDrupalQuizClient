@@ -42,17 +42,43 @@
   width: 50%;
   margin: 0 auto;
   text-align: left;
-  border: 1px solid;
+  /*border: 1px solid;*/
   margin-top: 3em;
   padding: 1%;
 }
 
 .quiz-page-title {
   text-align: center;
+  margin-bottom: 1.5em;
+}
+
+.answer_wrapper {
+  /*float: left;*/
+  margin-bottom: 1em;
+}
+
+.posible_answer {
+  float: left;
+  margin-left: 0.5em;
 }
 
 .current_question_title {
   /*float: left;*/
+  margin-bottom: 1em;
+}
+
+.next_question_buton {
+  float: right;
+  background: #293073;
+  border: none;
+  color: #FFF;
+  padding: 1% 2%;
+  font-weight: bold;
+  border-radius: 12px;
+}
+
+.next_question_buton:hover {
+  background: #071574;
 }
 
 

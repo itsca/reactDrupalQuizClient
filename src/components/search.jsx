@@ -15,6 +15,9 @@ class Search extends React.Component {
       hashtagSearchValue: "",
       currQuiz: '',
       selectedQuiz: "",
+      currQuestionIndex: 0,
+      selectedAnswer: "",
+      incorrectAnswer: false,
       searchResult: {
         'name': '',
         'count': '',
@@ -60,14 +63,22 @@ class Search extends React.Component {
 
   renderQuestion() {
     currentQuizLength = this.state.currQuiz.field_q.length
-    let currQuestionIndex = 0
-    let question = this.state.currQuiz.field_q[currQuestionIndex];
+    if (currentQuizLength === this.state.currQuestionIndex) {
+      return(
+        <div>
+          <h3 className="current_question_title">
+             Congrats
+          </h3>
+        </div>
+      )
+    }
+    let question = this.state.currQuiz.field_q[this.state.currQuestionIndex];
     return(
       <div>
         {
           <div>
             <h3 className="current_question_title">
-             {(currQuestionIndex+1) + ")  " }
+             {(this.state.currQuestionIndex+1) + ")  " }
              {question.field_t["0"].value + ' ?'}
             </h3>
             <form action="">
@@ -77,17 +88,31 @@ class Search extends React.Component {
                   //console.log(currentCorrectAnswer)
                 } 
                 return(
-                  <div key={index2}>
-                    <input type="radio" name="answer" value={answer.answer} />
-                      <p>{answer.answer}</p>
+                  <div key={index2} className="answer_wrapper">
+                    <input className="posible_answer" type="radio" name="answer" value={answer.answer} onClick={ (e) => {this.handleAnswerChange(answer.answer)} }/>
+                    <p className="posible_answer">{answer.answer}</p>
+                    <div className="cf">
+                    </div>
                   </div>
                 )}
               )}
             </form>
+            {this.state.incorrectAnswer && <p style={{color: 'red'}}>Sorry wrong answer, please try again</p>}
+            <input type="button" value="Next" className="next_question_buton" onClick={() => { this.handleNext()}} />
           </div>
         }
       </div>
     )
+  }
+
+  handleNext() {
+    if (this.state.selectedAnswer === currentCorrectAnswer) {
+      this.setState({currQuestionIndex: this.state.currQuestionIndex+1})
+    }
+  }
+
+  handleAnswerChange(answer) {
+    this.setState({selectedAnswer: answer})
   }
 
   render() {
@@ -126,9 +151,7 @@ class Search extends React.Component {
             </div>
             }
             {this.state.searchError && 
-            <p>
               <p style={{color: 'red'}}>No Quiz Found</p>
-            </p>
             }
           </div>
         </div>
