@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+.App {
+  font-family: 'Ubuntu' !important;
+  text-align: center;
+}
+
+.App-logo {
+  margin-bottom: 0.1em;
+}
+
+.App-header {
+  background-color: #EAC205;
+  height: 150px;
+  padding: 10px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.3em;
+  color: #071574;
+  font-weight: bold;
+  margin-bottom: 0.2em;
+  margin-top: 0.1em;
+}
+
+.App-subtitle {
+  font-size: 1.2em;
+  color: #071574;
+  font-weight: bold;
+  margin-top: 0.1em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
